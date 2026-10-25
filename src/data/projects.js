@@ -12,18 +12,6 @@ export const projects = [
     highlight: "Experiencia de compra",
   },
   {
-    id: 2,
-    title: "Supermercado Online",
-    description:
-      "Aplicación de gestión comercial que permite administrar ventas, controlar inventario y calcular totales de forma dinámica. En evolución para sumar nuevas funcionalidades y optimizar la base de datos.",
-    tech: ["React", "JavaScript", "Node.js", "CSS"],
-    image: "/img/projects/supermercado-online.jpg",
-    imageAlt: "Panel de gestión de ventas de Supermercado Online",
-    demo: null,
-    code: "https://github.com/tomasgallardo-dev/Sistema-de-inventario",
-    highlight: "Lógica de negocio",
-  },
-  {
     id: 3,
     title: "Calculadora Interactiva",
     description:

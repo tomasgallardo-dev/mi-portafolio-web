@@ -1,0 +1,125 @@
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  padding: clamp(22px, 2.6vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color var(--ease),
+    background-color var(--ease);
+}
+
+.skill-card:hover {
+  border-color: var(--accent-border);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.skill-card h3 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  margin-top: 24px;
+}
+
+.skill-info {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skill-name {
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.skill-level {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.skill-meter {
+  display: flex;
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.skill-meter span {
+  flex: 1;
+  height: 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.09);
+  transition: background-color var(--ease);
+}
+
+.skill-meter span.is-filled {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.35);
+}
+
+.soft-skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  margin-top: 22px;
+  padding: clamp(22px, 2.6vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, rgba(52, 211, 153, 0.07), rgba(255, 255, 255, 0.02));
+}
+
+.soft-skills h3 {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.soft-skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.soft-skills li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: rgba(11, 6, 20, 0.35);
+  font-size: 12.5px;
+  color: var(--muted-strong);
+}
+
+.soft-skills i {
+  font-size: 11px;
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .soft-skills {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+}

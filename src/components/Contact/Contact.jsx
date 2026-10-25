@@ -1,92 +1,168 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { site } from "../../data/site.js";
+import "./Contact.css";
 
-const Contact = () => {
+const FORM_ENDPOINT = "https://formspree.io/f/mjgzppva";
 
-        const [formData, setFormData] = useState({
-            nombre: '',
-            email:'',
-            mensaje:''
-        })
-        const [enviado, setEnviado] = useState(false)
-        const [error, setError] = useState(false)
+const initialForm = { nombre: "", email: "", mensaje: "" };
 
-        function handleChange(e) {
-            setFormData ({...formData, [e.target.name]: e.target.value})
-        }
+function Contact() {
+  const [formData, setFormData] = useState(initialForm);
+  const [status, setStatus] = useState("idle");
 
-        async function handleSubmit(e) {
-            e.preventDefault()
-            const response = await fetch('https://formspree.io/f/mjgzppva', {
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData)
-            })
-            if (response.ok) {
-                setEnviado(true)
-                setFormData({ nombre: '', email: '', mensaje: '' })
-            } else {
-                setError(true)
-            }
-        }
+  const handleChange = (event) => {
+    setFormData((current) => ({ ...current, [event.target.name]: event.target.value }));
+  };
 
-        return (
-        <section id="contacto" className="contacto">
-            <div className="contenido-seccion">
-                <h2>Contacto</h2>
-                <p className="subtitulo-seccion">¿Tenés alguna propuesta? ¡Escribime!</p>
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus("sending");
 
-                {enviado && (
-                    <p className="mensaje-exito">¡Mensaje enviado con éxito! Te respondo a la brevedad.</p>
-                )}
-                {error && (
-                    <p className="mensaje-error">Algo salió mal. Intentá de nuevo.</p>
-                )}
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
 
-                <form className="formulario-contacto" onSubmit={handleSubmit}>
-                    <div className="campo">
-                        <label htmlFor="nombre">Nombre</label>
-                        <input
-                            type="text"
-                            id="nombre"
-                            name="nombre"
-                            value={formData.nombre}
-                            onChange={handleChange}
-                            placeholder="Tu nombre"
-                            required
-                        />
-                    </div>
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formData),
+        signal: controller.signal,
+      });
 
-                    <div className="campo">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Tu email"
-                            required
-                        />
-                    </div>
+      if (!response.ok) throw new Error("No se pudo enviar el formulario");
 
-                    <div className="campo">
-                        <label htmlFor="mensaje">Mensaje</label>
-                        <textarea
-                            id="mensaje"
-                            name="mensaje"
-                            value={formData.mensaje}
-                            onChange={handleChange}
-                            placeholder="Tu mensaje"
-                            rows="5"
-                            required
-                        />
-                    </div>
+      setStatus("success");
+      setFormData(initialForm);
+    } catch {
+      setStatus("error");
+    } finally {
+      clearTimeout(timeout);
+    }
+  };
 
-                    <button type="submit">Enviar mensaje</button>
-                </form>
+  return (
+    <section id="contacto" className="section contact">
+      <div className="container contact-grid">
+        <div className="contact-info">
+          <p className="section-eyebrow">Contacto</p>
+          <h2 className="section-title">¿Tenés una idea o una propuesta?</h2>
+          <p className="contact-lead">
+            Estoy abierto a oportunidades como desarrollador full stack y a proyectos freelance.
+            Escribime y te respondo a la brevedad.
+          </p>
+
+          <a className="contact-email" href={`mailto:${site.email}`}>
+            <span className="contact-email-icon" aria-hidden="true">
+              <i className="fa-solid fa-envelope" />
+            </span>
+            <span>
+              <small>Escribime directamente</small>
+              {site.email}
+            </span>
+            <i className="fa-solid fa-arrow-up-right-from-square contact-email-arrow" aria-hidden="true" />
+          </a>
+
+          <ul className="contact-socials" aria-label="Redes profesionales">
+            {site.socials.map((social) => (
+              <li key={social.label}>
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  <i className={social.icon} aria-hidden="true" />
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <p className="contact-note">
+            <i className="fa-regular fa-clock" aria-hidden="true" />
+            Respondo normalmente dentro de las próximas 24 a 48 horas.
+          </p>
+        </div>
+
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <div className="form-row">
+            <div className="field">
+              <label htmlFor="nombre">Nombre</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+                placeholder="Tu nombre"
+                autoComplete="name"
+                required
+              />
             </div>
-        </section>
-    )
+
+            <div className="field">
+              <label htmlFor="email">Correo electrónico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="tu@email.com"
+                autoComplete="email"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="mensaje">Mensaje</label>
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              value={formData.mensaje}
+              onChange={handleChange}
+              placeholder="Contame sobre tu proyecto o la oportunidad..."
+              rows="6"
+              minLength={10}
+              required
+            />
+          </div>
+
+          <div className="honeypot" aria-hidden="true">
+            <label htmlFor="empresa">Empresa</label>
+            <input id="empresa" name="_gotcha" type="text" tabIndex="-1" autoComplete="off" />
+          </div>
+
+          <p
+            className={`form-status${status === "success" ? " is-success" : ""}${
+              status === "error" ? " is-error" : ""
+            }`}
+            role="status"
+            aria-live="polite"
+          >
+            {status === "success" &&
+              "¡Mensaje enviado con éxito! Te respondo a la brevedad."}
+            {status === "error" && (
+              <>
+                No pudimos enviar el mensaje. Probá de nuevo o escribime a{" "}
+                <a href={`mailto:${site.email}`}>{site.email}</a>.
+              </>
+            )}
+          </p>
+
+          <button type="submit" className="btn btn-primary form-submit" disabled={status === "sending"}>
+            {status === "sending" ? (
+              <>
+                Enviando...
+                <i className="fa-solid fa-circle-notch fa-spin" aria-hidden="true" />
+              </>
+            ) : (
+              <>
+                Enviar mensaje
+                <i className="fa-solid fa-paper-plane" aria-hidden="true" />
+              </>
+            )}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
 }
 
-export default Contact
+export default Contact;

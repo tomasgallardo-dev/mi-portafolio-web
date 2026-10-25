@@ -1,72 +1,64 @@
-const Skills = () => {
-    const techSkills = [ 
-    {nombre: "Javascript", porcentaje: "80%", claseColor: "javascript"} ,
+import { skillGroups, softSkills } from "../../data/skills.js";
+import "./Skills.css";
 
-    {nombre:"HTML", porcentaje:"90%", claseColor:"html"},
-
-    {nombre:"CSS", porcentaje:"90%", claseColor:"css"},
-
-    {nombre:"React", porcentaje:"90%", claseColor:"react"},
-
-    {nombre:"Node.js", porcentaje:"70%", claseColor:"node"},
-
-    {nombre:"Typescript", porcentaje:"70%", claseColor:"typescript"},
-
-    {nombre:"MongoDB", porcentaje:"70%", claseColor:"mongodb"},
-
-    {nombre:"GitHub/Git", porcentaje:"70%", claseColor:"github"}
-    ]
-
-        const profSkills = [ 
-    {nombre: "Resolucion de Problemas", porcentaje: "100%", claseColor: "resolucion"} ,
-
-    {nombre:"Trabajo en Equipo", porcentaje:"100%", claseColor:"equipo"},
-
-    {nombre:"Aprendizaje Continuo", porcentaje:"100%",claseColor:"aprendizaje"},
-
-    {nombre:"Comunicacion Efectiva", porcentaje:"90%", claseColor:"comunicacion"},
-
-    {nombre:"Autogestion", porcentaje:"90%", claseColor:"autogestion"}
-    ]
-
-    return(
-        <section className="skills" id="skills">
-            <div className="contenido-seccion">
-                <h2>Skills</h2>
-            <div className="fila">
-        <div className="col">
-        <h3>Technical Skills</h3>
-        {
-            techSkills.map((habilidad) => (
-                <div className="skill" key={habilidad.nombre}>
-                    <span> {habilidad.nombre} </span>
-                    <div className="barra-skill">
-                        <div className={`progreso ${habilidad.claseColor}`}>
-                            <span> {habilidad.porcentaje} </span>
-                        </div>
-                    </div>
-            </div>
-        ))}
-    </div>
-
-    <div className="col">
-        <h3>Profesional Skills</h3>
-        {
-            profSkills.map((habilidad) => (
-                <div className="skill" key={habilidad.nombre}>
-                    <span> {habilidad.nombre} </span>
-                        <div className="barra-skill">
-                            <div className={`progreso ${habilidad.claseColor}`}>
-                                <span> {habilidad.porcentaje} </span>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
+function Skills() {
+  return (
+    <section id="habilidades" className="section skills">
+      <div className="container">
+        <div className="section-header">
+          <p className="section-eyebrow">Habilidades</p>
+          <h2 className="section-title">Herramientas que uso a diario</h2>
+          <p className="section-subtitle">
+            Niveles honestos: lo que domino, lo que estoy profundizando y lo que uso para
+            construir.
+          </p>
         </div>
-    </div>
-</section>
-    )
+
+        <div className="skills-grid">
+          {skillGroups.map((group) => (
+            <article className="skill-card" key={group.title}>
+              <h3>{group.title}</h3>
+              <ul className="skill-list">
+                {group.items.map((skill) => (
+                  <li key={skill.name}>
+                    <div className="skill-info">
+                      <span className="skill-name">{skill.name}</span>
+                      <span className="skill-level">{skill.level}</span>
+                    </div>
+                    <div
+                      className="skill-meter"
+                      role="img"
+                      aria-label={`${skill.name}: nivel ${skill.level}`}
+                    >
+                      {[1, 2, 3, 4].map((step) => (
+                        <span
+                          key={step}
+                          className={step <= skill.score ? "is-filled" : ""}
+                          aria-hidden="true"
+                        />
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div className="soft-skills">
+          <h3>Habilidades blandas</h3>
+          <ul>
+            {softSkills.map((skill) => (
+              <li key={skill.name}>
+                <i className={skill.icon} aria-hidden="true" />
+                {skill.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Skills;

@@ -1,61 +1,79 @@
-const Resume = () => {
-    return (
-        <section id="curriculum" className="curriculum">
-            <div className="contenido-seccion">
-                <h2>Curriculum</h2>
-                <p className="subtitulo-seccion">Educación y experiencia</p>
+import { education, experience } from "../../data/experience.js";
+import "./Resume.css";
 
-                <div className="resume-grid">
+function TimelineItem({ children }) {
+  return <article className="timeline-item">{children}</article>;
+}
 
-                    <div className="resume-card">
-                        <div className="resume-card-header">
-                            <i className="fa-solid fa-graduation-cap"></i>
-                            <h3>Educación</h3>
-                        </div>
+function Resume() {
+  return (
+    <section id="experiencia" className="section experience">
+      <div className="container">
+        <div className="section-header">
+          <p className="section-eyebrow">Experiencia</p>
+          <h2 className="section-title">Recorrido profesional y formación</h2>
+          <p className="section-subtitle">
+            De la operación ferroviaria al desarrollo de software: disciplina, trabajo en equipo y
+            foco en resultados.
+          </p>
+        </div>
 
-                        <div className="resume-item">
-                            <h4>Técnico en Programación</h4>
-                            <p className="resume-lugar">Teclab Instituto Técnico Superior</p>
-                            <span className="resume-badge">Finalizado nov. 2025</span>
-                            <p className="resume-desc">
-                                Formación técnica en desarrollo de software, programación 
-                                orientada a objetos y bases de datos.
-                            </p>
-                        </div>
+        <div className="experience-grid">
+          <div className="timeline-column">
+            <h3 className="timeline-title">
+              <i className="fa-solid fa-briefcase" aria-hidden="true" />
+              Experiencia laboral
+            </h3>
 
-                        <div className="resume-item">
-                            <h4>Desarrollo Web con React</h4>
-                            <p className="resume-lugar">CoderHouse</p>
-                            <span className="resume-badge">Finalizado abril. 2026</span>
-                            <p className="resume-desc">
-                                Construcción de interfaces modernas con React, hooks, 
-                                componentes y consumo de APIs.
-                            </p>
-                        </div>
+            <div className="timeline">
+              {experience.map((job) => (
+                <TimelineItem key={`${job.company}-${job.role}`}>
+                  <div className="timeline-card">
+                    <div className="timeline-head">
+                      <h4>{job.role}</h4>
+                      <span className="timeline-period">{job.period}</span>
                     </div>
-
-                    <div className="resume-card">
-                        <div className="resume-card-header">
-                            <i className="fa-solid fa-briefcase"></i>
-                            <h3>Experiencia</h3>
-                        </div>
-
-                        <div className="resume-item">
-                            <h4>Operario de Vía</h4>
-                            <p className="resume-lugar">Trenes Argentinos</p>
-                            <span className="resume-badge">2019 — 2026</span>
-                            <p className="resume-desc">
-                                Mantenimiento de infraestructura ferroviaria. Trabajo en 
-                                equipo, cumplimiento de normas de seguridad y 
-                                responsabilidad operativa en entornos exigentes.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
+                    <p className="timeline-company">{job.company}</p>
+                    <p className="timeline-description">{job.description}</p>
+                    <ul className="timeline-achievements">
+                      {job.achievements.map((achievement) => (
+                        <li key={achievement}>
+                          <i className="fa-solid fa-check" aria-hidden="true" />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </TimelineItem>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+
+          <div className="timeline-column">
+            <h3 className="timeline-title">
+              <i className="fa-solid fa-graduation-cap" aria-hidden="true" />
+              Educación
+            </h3>
+
+            <div className="timeline">
+              {education.map((item) => (
+                <TimelineItem key={item.title}>
+                  <div className="timeline-card">
+                    <div className="timeline-head">
+                      <h4>{item.title}</h4>
+                      <span className="timeline-period">{item.period}</span>
+                    </div>
+                    <p className="timeline-company">{item.institution}</p>
+                    <p className="timeline-description">{item.description}</p>
+                  </div>
+                </TimelineItem>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default Resume;

@@ -1,0 +1,249 @@
+.projects {
+  overflow: hidden;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(64px, 8vw, 100px);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 60px);
+}
+
+.project--reverse .project-media {
+  order: 2;
+}
+
+.project--reverse .project-content {
+  order: 1;
+}
+
+.project-media {
+  position: relative;
+  z-index: 0;
+}
+
+.project-media::before {
+  content: "";
+  position: absolute;
+  inset: 8% 6%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.2), transparent 68%);
+  filter: blur(42px);
+}
+
+.browser-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #0d0817;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--ease),
+    border-color var(--ease),
+    box-shadow var(--ease);
+}
+
+.browser-frame:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-border);
+  box-shadow:
+    var(--shadow-card),
+    0 26px 70px -40px rgba(52, 211, 153, 0.5);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #120b20;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.browser-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.browser-url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  max-width: 260px;
+  margin-inline: auto;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 10.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browser-url i {
+  font-size: 8px;
+  color: var(--accent);
+  flex: 0 0 auto;
+}
+
+.browser-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.browser-live > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.browser-shot {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.browser-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 6, 20, 0.32), transparent 45%);
+  pointer-events: none;
+}
+
+.browser-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  transition: transform 600ms var(--ease);
+}
+
+.browser-frame:hover .browser-shot img {
+  transform: scale(1.03);
+}
+
+.project-content {
+  max-width: 470px;
+}
+
+.project--reverse .project-content {
+  justify-self: end;
+}
+
+.project-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.project-highlight::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.75;
+}
+
+.project-content h3 {
+  margin-top: 10px;
+  font-size: clamp(26px, 3.2vw, 36px);
+  letter-spacing: -1px;
+}
+
+.project-description {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.btn-sm {
+  min-height: 44px;
+  padding: 11px 18px;
+  font-size: 13.5px;
+}
+
+@media (max-width: 900px) {
+  .project {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .project--reverse .project-media,
+  .project--reverse .project-content {
+    order: 0;
+  }
+
+  .project-content,
+  .project--reverse .project-content {
+    max-width: none;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 520px) {
+  .browser-url {
+    display: none;
+  }
+
+  .browser-bar {
+    justify-content: space-between;
+  }
+
+  .project-links {
+    width: 100%;
+  }
+
+  .project-links .btn {
+    flex: 1;
+  }
+}

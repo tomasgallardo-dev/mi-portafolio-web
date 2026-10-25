@@ -1,43 +1,70 @@
-const About = () => {
-    return (
-        <section id="sobremi" className="sobremi">
-            <div className="contenido-seccion">
-                <h2>Sobre Mi</h2>
-                <p>
-                    Soy un Desarrollador Web enfocado en el Frontend, apasionado por 
-                    construir interfaces dinámicas, escalables y centradas en la 
-                    experiencia del usuario utilizando React y JavaScript.
-                </p>
+import "./About.css";
 
-                <p>
-                    Además, cuento con bases sólidas en tecnologías Backend como 
-                    Node.js, MongoDB y MySQL, lo que me permite comprender el ciclo 
-                    completo de desarrollo de una aplicación.
-                </p>
+const focusAreas = [
+  {
+    icon: "fa-solid fa-universal-access",
+    text: "Interfaces accesibles y responsivas",
+  },
+  {
+    icon: "fa-solid fa-layer-group",
+    text: "Componentes reutilizables y código mantenible",
+  },
+  {
+    icon: "fa-solid fa-gauge-high",
+    text: "Rendimiento y buenas prácticas web",
+  },
+  {
+    icon: "fa-solid fa-people-group",
+    text: "Colaboración con equipos y producto",
+  },
+];
 
-                <p>
-                    Disfruto transformar ideas en soluciones reales, desarrollando 
-                    proyectos como plataformas de e-commerce, sistemas de gestión 
-                    de inventario y aplicaciones que consumen APIs externas.
-                </p>
+function About() {
+  return (
+    <section id="sobremi" className="section about">
+      <div className="container about-grid">
+        <div className="about-copy">
+          <p className="section-eyebrow">Sobre mí</p>
+          <h2 className="section-title">Tecnología con criterio, personas en el centro.</h2>
 
-                <p>
-                    Actualmente busco integrarme a un equipo donde pueda aportar 
-                    valor, enfrentar nuevos desafíos técnicos y continuar creciendo 
-                    profesionalmente.
-                </p>
-                <p> Soy una persona proactiva, con capacidad 
-                    de adaptación y ganas de seguir creciendo 
-                    en un equipo que me desafíe.</p>
-                <p>
-                    Si deseas conocer más sobre mi experiencia o discutir posibles 
-                    colaboraciones, no dudes en contactarme a través de mis redes 
-                    sociales o descargar mi CV.
-                </p>
+          <div className="about-text">
+            <p>
+              Soy desarrollador full stack y vengo de un recorrido poco habitual: mi paso por Trenes
+              Argentinos me enseñó a trabajar bajo presión, cuidar los detalles y asumir
+              responsabilidad por lo que hago. Hoy aplico esa misma disciplina al desarrollo web.
+            </p>
+            <p>
+              Me especializo en React y JavaScript, con bases sólidas de Node.js, MongoDB y MySQL.
+              Disfruto transformar ideas en interfaces claras, accesibles y fáciles de mantener.
+            </p>
+            <p>
+              Busco sumarme a un equipo donde pueda aportar valor, aprender de otros y seguir
+              creciendo profesionalmente.
+            </p>
+          </div>
 
-            </div>
-        </section>
-    );
+          <a className="btn btn-ghost about-cta" href="#contacto">
+            Hablemos de tu proyecto
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </a>
+        </div>
+
+        <aside className="about-card">
+          <h3>En qué me enfoco</h3>
+          <ul>
+            {focusAreas.map((area) => (
+              <li key={area.text}>
+                <span className="about-icon" aria-hidden="true">
+                  <i className={area.icon} />
+                </span>
+                {area.text}
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </section>
+  );
 }
 
 export default About;
